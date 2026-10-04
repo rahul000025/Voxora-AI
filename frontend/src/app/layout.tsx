@@ -6,7 +6,10 @@ import { ThemeProvider } from '@/components/ThemeToggle';
 export const metadata: Metadata = {
   title: 'Voxora AI | Advanced Neural Text-to-Speech Studio',
   description: 'Generate hyper-realistic AI neural speech in Hindi, English, and 50+ languages with studio-grade pitch, rate, and audio controls.',
-  keywords: ['Text to Speech', 'AI Voice Generator', 'Hindi Neural Voices', 'Edge TTS', 'Voxora AI', 'Voice Studio'],
+  keywords: ['Text to Speech', 'AI Voice Generator', 'Hindi Neural Voices', 'Edge TTS', 'Voxora AI', 'Voice Studio', 'Er Rahul Thakur'],
+  authors: [{ name: 'ER RAHUL THAKUR', url: 'https://github.com/rahul000025' }],
+  creator: 'ER RAHUL THAKUR',
+  publisher: 'ER RAHUL THAKUR',
   icons: {
     icon: '/voxora-icon.svg',
   },

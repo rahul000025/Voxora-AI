@@ -22,9 +22,9 @@ export default function Footer() {
             Ultra-realistic neural AI text-to-speech studio. Craft life-like voices in Hindi, English, and dozens of global dialects with precision pitch, rate, and volume controls.
           </p>
           <div className="flex items-center gap-2 text-xs text-slate-500">
-            <span>Powered by Edge Neural TTS</span>
+            <span>Trade Name: <strong className="text-slate-300">ER RAHUL THAKUR</strong></span>
             <span>•</span>
-            <span>Python FastAPI</span>
+            <span>Powered by Edge Neural TTS</span>
             <span>•</span>
             <span>Next.js 15</span>
           </div>
@@ -72,10 +72,10 @@ export default function Footer() {
 
       <div className="max-w-7xl mx-auto mt-10 pt-6 border-t border-white/5 flex flex-col sm:flex-row justify-between items-center gap-4 text-xs text-slate-500">
         <div>
-          © {new Date().getFullYear()} Voxora AI. Commercial-grade Neural Voice Synthesis.
+          © {new Date().getFullYear()} Voxora AI. Trade Name: <span className="text-lime-400 font-bold">ER RAHUL THAKUR</span>. All rights reserved.
         </div>
         <div className="flex items-center gap-1">
-          <span>Engineered with precision for creators, podcasters, and developers.</span>
+          <span>Designed & Developed with precision by <strong className="text-slate-200">ER RAHUL THAKUR</strong>.</span>
         </div>
       </div>
     </footer>

@@ -14,5 +14,7 @@ class Settings:
     
     PROJECT_NAME: str = "Voxora AI - Text-to-Speech Engine"
     VERSION: str = "1.0.0"
+    TRADE_NAME: str = "ER RAHUL THAKUR"
+    AUTHOR: str = "ER RAHUL THAKUR"
 
 settings = Settings()

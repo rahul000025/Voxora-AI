@@ -5,6 +5,9 @@
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-CSS-38B2AC?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![Edge-TTS](https://img.shields.io/badge/Engine-edge--tts-a3e635?style=flat)](https://github.com/rany2/edge-tts)
 
+> **Trade Name**: **ER RAHUL THAKUR**  
+> **Developer & Creator**: **ER RAHUL THAKUR** ([@rahul000025](https://github.com/rahul000025))
+
 **Voxora AI** is a complete, commercial-grade AI Text-to-Speech Voice Generator web application. It combines a sleek, modern dark-themed SaaS interface with lime-green neon accents and a high-performance Python FastAPI backend powered by Microsoft's neural voice engine (`edge-tts`).
 
 Synthesize life-like speech in **Hindi (Devanagari / Hinglish)**, **English (Indian, American, British accents)**, and over **50+ languages**, with granular controls over speaking rate, pitch, and volume, audio waveform visualization, generation history, and instant MP3 downloads.
@@ -304,5 +307,7 @@ When scaling Voxora AI to a high-volume SaaS business:
 
 ---
 
-## License
-MIT License. Built for creators and developers by Voxora AI.
+## License & Copyright
+MIT License.  
+**Trade Name**: **ER RAHUL THAKUR**  
+Copyright © 2026 **ER RAHUL THAKUR**. Built with precision for creators, podcasters, and developers.
