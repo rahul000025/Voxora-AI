@@ -1,0 +1,11 @@
+services:
+  - type: web
+    name: voxora-ai-backend
+    runtime: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port $PORT
+    envVars:
+      - key: CORS_ORIGINS
+        value: "*"
+      - key: MAX_TEXT_LENGTH
+        value: 5000
