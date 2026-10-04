@@ -1,23 +1,47 @@
 import { TTSRequest, VoicesResponse, VoiceItem } from './types';
 import { CURATED_VOICES } from './sampleData';
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:8000';
+const DEFAULT_HOSTS = [
+  process.env.NEXT_PUBLIC_API_URL,
+  'http://127.0.0.1:8000',
+  'http://localhost:8000'
+].filter(Boolean) as string[];
+
+let activeApiBase = DEFAULT_HOSTS[0] || 'http://127.0.0.1:8000';
 
 export async function checkBackendHealth(): Promise<{ isHealthy: boolean; voicesCount: number }> {
-  try {
-    const res = await fetch(`${API_BASE}/health`, {
-      method: 'GET',
-      headers: { 'Accept': 'application/json' },
-      cache: 'no-store'
-    });
-    if (res.ok) {
-      const data = await res.json();
-      return { isHealthy: true, voicesCount: data.voices_loaded || 0 };
+  for (const host of DEFAULT_HOSTS) {
+    try {
+      const res = await fetch(`${host}/health`, {
+        method: 'GET',
+        headers: { 'Accept': 'application/json' },
+        cache: 'no-store'
+      });
+      if (res.ok) {
+        const data = await res.json();
+        activeApiBase = host;
+        return { isHealthy: true, voicesCount: data.voices_loaded || 0 };
+      }
+    } catch {
+      // try next candidate
     }
-  } catch (error) {
-    console.warn('Backend health check error:', error);
   }
   return { isHealthy: false, voicesCount: 0 };
+}
+
+async function fetchWithFallback(endpoint: string, options: RequestInit): Promise<Response> {
+  let lastError: any = null;
+  const hosts = Array.from(new Set([activeApiBase, ...DEFAULT_HOSTS]));
+  for (const host of hosts) {
+    try {
+      const res = await fetch(`${host}${endpoint}`, options);
+      activeApiBase = host;
+      return res;
+    } catch (err: any) {
+      lastError = err;
+    }
+  }
+  throw lastError || new Error(`Could not connect to FastAPI backend server. Ensure backend is running.`);
 }
 
 export async function fetchVoices(params?: {
@@ -33,8 +57,8 @@ export async function fetchVoices(params?: {
   if (params?.featured) query.set('featured', 'true');
 
   try {
-    const url = `${API_BASE}/api/voices${query.toString() ? `?${query.toString()}` : ''}`;
-    const res = await fetch(url, {
+    const endpoint = `/api/voices${query.toString() ? `?${query.toString()}` : ''}`;
+    const res = await fetchWithFallback(endpoint, {
       method: 'GET',
       headers: { 'Accept': 'application/json' }
     });
@@ -84,7 +108,7 @@ export async function generateSpeech(request: TTSRequest): Promise<{ blob: Blob;
     throw new Error('Text exceeds maximum limit of 5,000 characters.');
   }
 
-  const response = await fetch(`${API_BASE}/api/tts`, {
+  const response = await fetchWithFallback(`/api/tts`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -120,7 +144,7 @@ export async function generateSpeech(request: TTSRequest): Promise<{ blob: Blob;
 }
 
 export async function previewVoiceSample(voiceName: string, customText?: string): Promise<string> {
-  const response = await fetch(`${API_BASE}/api/preview`, {
+  const response = await fetchWithFallback(`/api/preview`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

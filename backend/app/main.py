@@ -32,17 +32,11 @@ app = FastAPI(
     lifespan=lifespan
 )
 
-# CORS configuration
-origins = settings.CORS_ORIGINS
-if "*" not in origins and "http://localhost:3000" not in origins:
-    origins.append("http://localhost:3000")
-if "http://127.0.0.1:3000" not in origins:
-    origins.append("http://127.0.0.1:3000")
-
+# Universal CORS configuration for localhost, Vercel, and custom domains
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=origins if "*" not in origins else ["*"],
-    allow_credentials=True,
+    allow_origins=["*"],
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
     expose_headers=["Content-Disposition", "Content-Length", "X-Generated-By"]
