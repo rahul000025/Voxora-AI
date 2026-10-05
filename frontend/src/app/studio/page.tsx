@@ -204,7 +204,7 @@ export default function StudioPage() {
                   <span className="font-bold">Synthesis Error:</span>
                   <p className="leading-relaxed">{errorMessage}</p>
                   <p className="text-[11px] text-red-300/80">
-                    Make sure the FastAPI backend server is running at <code className="bg-red-900/40 px-1 py-0.5 rounded">http://localhost:8000</code>.
+                    Check that the configured FastAPI backend is available, then try again.
                   </p>
                 </div>
               </div>

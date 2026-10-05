@@ -1,11 +1,17 @@
 import { TTSRequest, VoicesResponse, VoiceItem } from './types';
 import { CURATED_VOICES } from './sampleData';
 
+const configuredApiUrl = process.env.NEXT_PUBLIC_API_URL;
+const deployedRenderApiUrl = 'https://voxora-ai-zv00.onrender.com';
+
 const DEFAULT_HOSTS = [
-  // Use the Next.js same-origin proxy. This works both in browsers and when
-  // the frontend and backend run in separate Docker containers.
-  '',
-  process.env.NEXT_PUBLIC_API_URL
+  // Prefer an explicitly configured backend. Vercel needs an external backend
+  // URL; local and Docker deployments can use the same-origin Next.js proxy.
+  configuredApiUrl,
+  typeof window !== 'undefined' && window.location.hostname.endsWith('.vercel.app')
+    ? deployedRenderApiUrl
+    : undefined,
+  ''
 ].filter((host): host is string => host !== undefined);
 
 let activeApiBase = DEFAULT_HOSTS[0] || '';
@@ -32,16 +38,21 @@ export async function checkBackendHealth(): Promise<{ isHealthy: boolean; voices
 
 async function fetchWithFallback(endpoint: string, options: RequestInit): Promise<Response> {
   let lastError: any = null;
+  let lastResponse: Response | null = null;
   const hosts = Array.from(new Set([activeApiBase, ...DEFAULT_HOSTS]));
   for (const host of hosts) {
     try {
       const res = await fetch(`${host}${endpoint}`, options);
-      activeApiBase = host;
-      return res;
+      if (res.ok || res.status !== 404) {
+        activeApiBase = host;
+        return res;
+      }
+      lastResponse = res;
     } catch (err: any) {
       lastError = err;
     }
   }
+  if (lastResponse) return lastResponse;
   throw lastError || new Error(`Could not connect to FastAPI backend server. Ensure backend is running.`);
 }
 
