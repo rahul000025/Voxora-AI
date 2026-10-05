@@ -2,12 +2,13 @@ import { TTSRequest, VoicesResponse, VoiceItem } from './types';
 import { CURATED_VOICES } from './sampleData';
 
 const DEFAULT_HOSTS = [
-  process.env.NEXT_PUBLIC_API_URL,
-  'http://127.0.0.1:8000',
-  'http://localhost:8000'
-].filter(Boolean) as string[];
+  // Use the Next.js same-origin proxy. This works both in browsers and when
+  // the frontend and backend run in separate Docker containers.
+  '',
+  process.env.NEXT_PUBLIC_API_URL
+].filter((host): host is string => host !== undefined);
 
-let activeApiBase = DEFAULT_HOSTS[0] || 'http://127.0.0.1:8000';
+let activeApiBase = DEFAULT_HOSTS[0] || '';
 
 export async function checkBackendHealth(): Promise<{ isHealthy: boolean; voicesCount: number }> {
   for (const host of DEFAULT_HOSTS) {

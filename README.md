@@ -148,6 +148,16 @@ d:\Voxora.Ai\
 
 ## Quick Start Guide
 
+### Run with Docker
+
+Install Docker Desktop, then run from the repository root:
+
+```bash
+docker compose up --build
+```
+
+Open the studio at [http://localhost:3000/studio](http://localhost:3000/studio). The frontend sends API requests through its same-origin Next.js proxy, which forwards them to the backend container. Stop the stack with `docker compose down`.
+
 You can run both servers in two simple steps:
 
 ### Option A: Using Windows 1-Click Launchers
