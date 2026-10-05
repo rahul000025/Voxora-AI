@@ -2,7 +2,7 @@ import { TTSRequest, VoicesResponse, VoiceItem } from './types';
 import { CURATED_VOICES } from './sampleData';
 
 const configuredApiUrl = process.env.NEXT_PUBLIC_API_URL;
-const deployedRenderApiUrl = 'https://voxora-ai-zv00.onrender.com';
+const deployedRenderApiUrl = 'https://voxora-ai-zvo0.onrender.com';
 
 const DEFAULT_HOSTS = [
   // Prefer an explicitly configured backend. Vercel needs an external backend
